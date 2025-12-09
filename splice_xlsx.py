@@ -39,34 +39,38 @@ def create_dataframe(file):
 
     return commerce_dataframe,chemical_data_frame,dataframe
 
+def plot_data():
+    commcerce, chemical, dataframe = create_dataframe(file_name)
 
-commcerce, chemical, dataframe = create_dataframe(file_name)
+    # 'THCa%', 'Total CBD', 'CBGA', 'Total CBG', 'Δ9-THC'
+    # There are the columns that we will turn into a list for the sake of plotting
+    # Using .tolist()
+    name = chemical['Name'].to_numpy().tolist()
+    total_cbd = chemical['Total CBD'].to_numpy().tolist()
+    thca_percentage = chemical['THCa%'].values.tolist()
+    cbga = chemical['CBGA'].values.tolist()
+    total_cbg = chemical['Total CBG'].values.tolist()
 
-# 'THCa%', 'Total CBD', 'CBGA', 'Total CBG', 'Δ9-THC'
-# There are the columns that we will turn into a list for the sake of plotting
-# Using .tolist()
-name = chemical['Name'].to_numpy().tolist()
-total_cbd = chemical['Total CBD'].to_numpy().tolist()
-thca_percentage = chemical['THCa%'].values.tolist()
-cbga = chemical['CBGA'].values.tolist()
-total_cbg = chemical['Total CBG'].values.tolist()
+    delta_9 = chemical['Δ9-THC'].values.tolist()
 
-delta_9 = chemical['Δ9-THC'].values.tolist()
+    import matplotlib.pyplot as plt
 
-import matplotlib.pyplot as plt
+    # Import the mplot3d toolkit (necessary for 3d axes setup)
+    from mpl_toolkits.mplot3d import Axes3D
+    fig1 =plt.figure(figsize=(10, 6))
 
-# Import the mplot3d toolkit (necessary for 3d axes setup)
-from mpl_toolkits.mplot3d import Axes3D
-fig1 =plt.figure(figsize=(10, 6))
-
-ax1 = fig1.add_subplot(projection='3d')
+    ax1 = fig1.add_subplot(projection='3d')
 
 
-# ax1.scatter3D(thca_percentage, total_cbd, total_cbg,s=delta_9, c=  cbga,cmap='viridis', marker ='^')
-ax1.scatter3D(thca_percentage,total_cbd,total_cbg,cmap='viridis',marker ='^')
-ax1.set_xlabel('Total CBD')
-ax1.set_ylabel("Total CBG")
-ax1.set_zlabel("THCa %")
+    # ax1.scatter3D(thca_percentage, total_cbd, total_cbg,s=delta_9, c=  cbga,cmap='viridis', marker ='^')
+    ax1.scatter3D(thca_percentage,total_cbd,total_cbg,cmap='viridis',marker ='^')
+    ax1.set_xlabel('Total CBD')
+    ax1.set_ylabel("Total CBG")
+    ax1.set_zlabel("THCa %")
 
-# if input("Type y to show figure") == 'y':
-#     plt.show()
+    if input("Type y to show figure") == 'y':
+        plt.show()
+
+
+if __name__ == '__main__':
+    plot_data()
