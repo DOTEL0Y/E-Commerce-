@@ -1,5 +1,6 @@
 # E-Commerce-
-<img width="554" height="555" alt="image" src="https://github.com/user-attachments/assets/f89c648d-4fe4-4185-b22d-8beb94c8d1c0" />
+<img width="1163" height="1199" alt="image" src="https://github.com/user-attachments/assets/fd39e44f-c01a-4396-8af5-f67d8282b774" />
+
 pgAdmin 4/ PostgresSQL. 
 
 
