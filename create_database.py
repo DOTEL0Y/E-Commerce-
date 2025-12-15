@@ -7,9 +7,14 @@ import traceback
 from generate_name import create_consumer
 from generate_name import first_name
 from generate_name import last_name
+from generate_orders import generate_customer_orders
 
 # Obtain function from create consumer
 consumer_db = create_consumer(first_name,last_name)
+
+
+# Function used to create orderhistory data
+from generate_order_history import generate_order_history
 
 # Used for pgAdmin 4 Server connect and utilize postgresql
 import psycopg2
@@ -96,18 +101,34 @@ try:
     # execute_values(cur,chemical_query,chemical_data.values.tolist())
 
 
+    # Create Orders table
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS orders(
+        orderid SERIAL PRIMARY KEY,
+        customerid int,
+        date date
+        )
+    """)
+
+    # orders_query = ('INSERT INTO orders (orderid,customerid,date) VALUES %s')
+    # execute_values(cur,orders_query,generate_customer_orders())
 
 
+    # Create OrderHistory table
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS order_History(
+        detailsid int PRIMARY KEY,
+        orderid int,
+        productid int[],
+        quantity int,
+        total_price decimal
+        )
+    """)
+    #
+    # order_details_query = 'INSERT INTO order_History (DetailsID,orderid,productid,quantity,total_price) VALUES %s'
+    # execute_values(cur,order_details_query,generate_order_history())
 
-    select_products = ('SELECT * FROM Products;')
-    cur.execute(select_products)
-    all_products = cur.fetchall()
-
-    select_chemical = ('SELECT * FROM thc_data')
-    cur.execute(select_chemical)
-    all_chemical = cur.fetchall()
-
-    print("Code Commited",all_products,all_chemical)
+    print("Code Commited")
     conn.commit()
 
 except psycopg2.DatabaseError as e:
